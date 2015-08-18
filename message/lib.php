@@ -174,7 +174,8 @@ function message_print_participants($context, $courseid, $contactselecturl=null,
               FROM {user} u
               JOIN ($esql) je ON je.id = u.id
               LEFT JOIN {message_contacts} mc ON mc.contactid = u.id AND mc.userid = :mcuserid
-             WHERE u.deleted = 0";
+             WHERE u.deleted = 0
+             ORDER BY " . $DB->sql_order_by_text("u.lastname") . " ASC";
 
     $participants = $DB->get_records_sql($sql, $params, $page * MESSAGE_CONTACTS_PER_PAGE, MESSAGE_CONTACTS_PER_PAGE);
 
